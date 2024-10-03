@@ -1,5 +1,6 @@
 package com.jambo.dream_shop.service.image;
 
+import io.github.pixee.security.Filenames;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class ImageService implements IImageservice {
        for (MultipartFile file : files ){
        try{
        Image image=new Image();
-       image.setFileName(file.getOriginalFilename());
+       image.setFileName(Filenames.toSimpleFileName(file.getOriginalFilename()));
        image.setFileType(file.getContentType());
        image.setImage(new SerialBlob(file.getBytes()));
        image.setProduct(product);
@@ -78,7 +79,7 @@ public class ImageService implements IImageservice {
         Image image=getImageById(imageId);
         try{
 
-            image.setFileName(file.getOriginalFilename());
+            image.setFileName(Filenames.toSimpleFileName(file.getOriginalFilename()));
             image.setFileType(file.getContentType());
             image.setImage(new SerialBlob(file.getBytes()));
             imageRepository.save(image);
